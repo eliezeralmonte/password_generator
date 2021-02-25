@@ -31,18 +31,38 @@ function generatePassword() {
   var userNumbers = ""; // value stored in this variable needs to be Y or N
   var userSpecial = ""; // value stored in this variable needs to be Y or N
 
-  userLength = prompt("Please enter password length, password needs to be from 8 to 128 characters long:");
-  userLength = parseInt(userLength);
-  console.log(userLength);
-  console.log(typeof userLength);
-  
-// check for password criteria and concatenate password string for character randomization
+// userLengthFunc makes sure the user has provided a number value
 
-    userLower = prompt("Would you like to include Lowercase characters?, \n\nPlease reply with Y for Yes or N for No");
-    userUpper = prompt("Would you like to include Uppercase characters?, \n\nPlease reply with Y for Yes or N for No");
-    userNumbers = prompt("Would you like to include Numbers?, \n\nPlease reply with Y for Yes or N for No");
-    userSpecial = prompt("Would you like to include Special characters?, \n\nPlease reply with Y for Yes or N for No");
+function userLengthFunc(){
+    userLength = prompt("Please enter password length, password needs to be from 8 to 128 characters long:");
+    userLength = parseInt(userLength);
+    console.log(userLength);
+    console.log(typeof userLength);
+  };
 
+userLengthFunc();
+
+  while(isNaN(userLength) || userLength < 8 || userLength > 128){
+  alert("Password needs to be a number between 8 and 128 characters.")  
+  userLengthFunc();
+  };
+
+// check for password criteria via prompts and conditionals to ensure entered answer is Y or N
+
+
+
+  userLower = prompt ("Would you like to include Lowercase characters?, \n\nPlease reply with Y for Yes or N for No").toUpperCase();
+  userUpper = prompt("Would you like to include Uppercase characters?, \n\nPlease reply with Y for Yes or N for No").toUpperCase();
+  userNumbers = prompt("Would you like to include Numbers?, \n\nPlease reply with Y for Yes or N for No").toUpperCase();
+  userSpecial = prompt("Would you like to include Special characters?, \n\nPlease reply with Y for Yes or N for No").toUpperCase();
+
+  console.log(userLower);
+  console.log(userUpper);
+  console.log(userNumbers);
+  console.log(userSpecial);
+
+
+  // concatenate password string for character randomization
       if (userLower === "Y") {
         userCriteriaString += lowerCaseStr
       };
@@ -58,6 +78,7 @@ function generatePassword() {
       if (userSpecial === "Y") {
         userCriteriaString = userCriteriaString + specialStr
       };
+
 
 console.log(userCriteriaString);
 
@@ -77,21 +98,13 @@ console.log(userCriteriaArr);
 
 var generatedPassword = "";
 
-for(var i = 0; i < userLength; i++) {
-  var x = Math.floor(Math.random() * userCriteriaArr.length);
-  generatedPassword += userCriteriaArr[x]
+      for(var i = 0; i < userLength; i++) {
+        var x = Math.floor(Math.random() * userCriteriaArr.length);
+        generatedPassword += userCriteriaArr[x]
 
-}
+      }
 console.log(generatedPassword);
     return generatedPassword;
   }
 
 writePassword();
-
-// randomizer
-//   var index = Math.floor(Math.random() * options.length);
-
-// methods
-
-// var userChoice = window.prompt("Enter R, P, or S:");
-// window.alert("The computer chose " + computerChoice);
