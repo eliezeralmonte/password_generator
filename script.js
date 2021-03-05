@@ -4,57 +4,51 @@ var upperCaseStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 var numbersStr = "0123456789";
 var specialStr = "!()?[]`~;:!@#$%^&*+=";
 
+// criteria variables:
+var userLength = "";
+var userCriteriaString = "";
+var userLower = "";
+var userUpper = "";
+var userNumbers = "";
+var userSpecial = "";
+
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 
 // listen for click event to start writePassword function
+
 generateBtn.addEventListener("click", writePassword);
 
 // Asks computer to write password prompting user for Input.
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
-
   passwordText.value = password;
-  }
-
-// check for password length:
-
-function generatePassword() {
-
-// criteria variables:
-
-  var userLength = ""; // value stored in this variable needs to be a number
-  var userCriteriaString = ""; // the value in this variable will be a concatenated string
-  var userLower = ""; // value stored in this variable needs to be Y or N
-  var userUpper = ""; // value stored in this variable needs to be Y or N
-  var userNumbers = ""; // value stored in this variable needs to be Y or N
-  var userSpecial = ""; // value stored in this variable needs to be Y or N
-
-// userLengthFunc makes sure the user has provided a number value
-
-function userLengthFunc(){
-    userLength = prompt("Please enter password length, password needs to be from 8 to 128 characters long:");
-    userLength = parseInt(userLength);
-    console.log(userLength);
-    console.log(typeof userLength);
   };
 
-userLengthFunc();
+// userLengthFunc makes sure the user has provided a number value
+function userLengthFunc(){
+  userLength = prompt("Please enter password length, password needs to be from 8 to 128 characters long:");
+  userLength = parseInt(userLength);
+  return userLength
+  };
+
+// check for password length:
+function generatePassword() {
 
   while(isNaN(userLength) || userLength < 8 || userLength > 128){
   alert("Password needs to be a number between 8 and 128 characters.")  
   userLengthFunc();
   };
 
+  
+
 // check for password criteria via prompts and conditionals to ensure entered answer is Y or N
 
-
-
-  userLower = prompt ("Would you like to include Lowercase characters?, \n\nPlease reply with Y for Yes or N for No").toUpperCase();
-  userUpper = prompt("Would you like to include Uppercase characters?, \n\nPlease reply with Y for Yes or N for No").toUpperCase();
-  userNumbers = prompt("Would you like to include Numbers?, \n\nPlease reply with Y for Yes or N for No").toUpperCase();
-  userSpecial = prompt("Would you like to include Special characters?, \n\nPlease reply with Y for Yes or N for No").toUpperCase();
+  userLower = confirm ("Would you like to include Lowercase characters?");  
+  userUpper = confirm ("Would you like to include Uppercase characters?");
+  userNumbers = confirm ("Would you like to include Numbers?");
+  userSpecial = confirm ("Would you like to include Special characters?");
 
   console.log(userLower);
   console.log(userUpper);
@@ -63,19 +57,19 @@ userLengthFunc();
 
 
   // concatenate password string for character randomization
-      if (userLower === "Y") {
+      if (userLower) {
         userCriteriaString += lowerCaseStr
       };
       console.log(userLower);
-      if (userUpper === "Y") {
+      if (userUpper) {
         userCriteriaString = userCriteriaString + upperCaseStr
       };
       console.log(userUpper);
-      if (userNumbers === "Y") {
+      if (userNumbers) {
         userCriteriaString = userCriteriaString + numbersStr
       };
       console.log(userNumbers);
-      if (userSpecial === "Y") {
+      if (userSpecial) {
         userCriteriaString = userCriteriaString + specialStr
       };
 
@@ -86,7 +80,7 @@ console.log(userCriteriaString);
 
   var userCriteriaArr = [];
   userCriteriaArr = Array.from(userCriteriaString);
-console.log(userCriteriaArr);
+  console.log(userCriteriaArr);
     
 // if user did not select any criteria then process will restart
       if (userCriteriaString === "") {
@@ -99,12 +93,14 @@ console.log(userCriteriaArr);
 var generatedPassword = "";
 
       for(var i = 0; i < userLength; i++) {
-        var x = Math.floor(Math.random() * userCriteriaArr.length);
-        generatedPassword += userCriteriaArr[x]
+      var x = Math.floor(Math.random() * userCriteriaArr.length);
+      generatedPassword += userCriteriaArr[x]
 
       }
-console.log(generatedPassword);
-    return generatedPassword;
-  }
+    console.log(generatedPassword);
 
+      return generatedPassword;
+};
+
+userLengthFunc();
 writePassword();
